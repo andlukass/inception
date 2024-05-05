@@ -8,21 +8,23 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8001:3306"  # Mapeia a porta 3306 do contêiner para a porta 8001 do host
+    network_mode: bridge
     volumes:
-      - /home/llopes-d/data/database:/var/lib/incep_mysql
-  incep_wordpress:
-    image: incep_wordpress:latest
-    build:
-      context: requirements/wordpress/
-      dockerfile: Dockerfile
-    volumes:
-      - /home/llopes-d/data/frontend:/var/www
-  icep_nginx:
-    image: incep_nginx:latest
-    build:
-      context: requirements/nginx/
-      dockerfile: Dockerfile
-    volumes:
-      - /home/llopes-d/data/frontend:/var/www
-    ports:
-      - "8000:443"  # Mapeia a porta 80 do contêiner para a porta 8000 do host
+      - /home/llopes-d/data/database:/var/lib/mysql
+  # incep_wordpress:
+  #   image: incep_wordpress:latest
+  #   build:
+  #     context: requirements/wordpress/
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - /home/llopes-d/data/frontend:/var/www
+  # icep_nginx:
+  #   image: incep_nginx:latest
+  #   build:
+  #     context: requirements/nginx/
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - /home/llopes-d/data/frontend:/var/www
+  #   ports:
+  #     - "8000:443"  # Mapeia a porta 80 do contêiner para a porta 8000 do host
+  #   network_mode: bridge

@@ -1,5 +1,5 @@
 up:
-	docker-compose -f ./srcs/docker-compose.yml up -d
+	docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 # all: up
 

@@ -24,22 +24,37 @@ sudo apt install docker-compose /// so you can use the docker-compose.yml
 
 
 3* create the docker image with nginx
-create a key and certificate so we can use ssl(tsl1.2) on our server.
-
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.key -out cert.crt
-
-we'll keep this two files in the srcs/requirements/ssl
-after in the dockerfile we'll copy it to the docker container
-
-you can test if the tls1.2
+create a key and certificate so we can use ssl(tsl1.2) on our server 
+with the following command:
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.key -out cert.crt
+we will keep this two files in the srcs/requirements/nginx/ssl so we
+can copy it with the dockerfile
+now with the correct dockerfile, it should be done!
+we can run the image and from our host access following url to test it:
+	https://172.17.0.2:443
+you can test if the tls1.2 separately by runnning:
 openssl s_client -connect <IP_ADRESS>:<SSL_PORT> -tls1_2
 
 4* create the docker image with mariadb
 create a directory /home/<YOR_LOGIN>/data/database
 it ill be used as the mariadb data directory
-
+install mariadb server on your host
+	apt-get update -y && apt-get install mariadb-server -y
+create the users and databases by running init-database.sh
+now with the correct dockerfile, it should be done!
+we can run the image and from our host run the following comand to test it:
+	mysql -u lucas -h 172.17.0.2 -P 3306 -p123
 
 5* create the docker image with wordpress
+create a directory /home/<YOR_LOGIN>/data/fronted/wordpress
+download the default files from wordpress website and keep it
+under your host in the wordpress directory
+	wget -q -O wordpress.zip https://wordpress.org/latest.zip && \
+	unzip -q wordpress.zip && \
+	rm wordpress.zip
+give full permissions so the wordpress user in the container can modify it without problems
+	chmod 777 -R wordpress
+
 
 
 BONUS 
@@ -53,17 +68,20 @@ so you can edit your files easier
 
 COMANDOS UTEIS:-------------------------------------------------*
 
-docker exet -it srcs_incep_wordpress_1 bash
+docker exec -it srcs_incep_mariadb_1 bash
 
-docker stop srcs_incep_wordpress_1
-docker rm srcs_incep_wordpress_1
-docker rmi incep_wordpress
+docker stop srcs_incep_mariadb_1
+docker rm srcs_incep_mariadb_1
+docker rmi incep_mariadb
 make
 
 
-docker stop $(docker ps -q); docker rm $(docker ps -aq) ; docker rmi incep_wordpress
+docker kill $(docker ps -q); docker rm $(docker ps -aq) 
+docker rmi $(docker images -q)
 
 docker build -t incep_wordpress:latest . ; docker run incep_wordpress
+
+docker run -e <ENV> -itd --rm <port> --name <nome> <image>
 
 ss -tuln // portas ativas
 
@@ -90,3 +108,9 @@ stop a container:
 
 remove a container:
 	docker rm  <CONTAINER_ID>
+
+	# systemctl stop mysql
+	# mysql_install_db --datadir='/home/llopes-d/data/database'
+	# sudo mariadbd --datadir='/home/llopes-d/data/database'
+	# apt-get remove --purge mariadb-server mariadb-client mariadb-common -y
+	

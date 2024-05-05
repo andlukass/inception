@@ -19,18 +19,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN mkdir -p /run/php/php7.4-fpm && chown -R www-data:www-data /run/php/php7.4-fpm
 
-# Install WordPress
-COPY script.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/script.sh
-
-# Define o script de entrada como o ENTRYPOINT do contêiner
-# ENTRYPOINT ["script.sh"]
-
-
-
-
-
-
 # Expose port (if needed)
 # EXPOSE 80
 
