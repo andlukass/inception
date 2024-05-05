@@ -1,5 +1,8 @@
 1* do the 1st bonus *THIS WILL HELP YOU DURING THE CONFIGURATION*
 
+
+
+
 2* install docker engine:
 install certificates so we can acess https
 sudo apt-get install ca-certificates curl gnupg lsb-release
@@ -23,17 +26,21 @@ sudo systemctl enable docker
 sudo apt install docker-compose /// so you can use the docker-compose.yml
 
 
+
+
 3* create the docker image with nginx
 create a key and certificate so we can use ssl(tsl1.2) on our server 
 with the following command:
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.key -out cert.crt
 we will keep this two files in the srcs/requirements/nginx/ssl so we
 can copy it with the dockerfile
-now with the correct dockerfile, it should be done!
+now with the correct dockerfile and conf, it should be done!
 we can run the image and from our host access following url to test it:
 	https://172.17.0.2:443
 you can test if the tls1.2 separately by runnning:
 openssl s_client -connect <IP_ADRESS>:<SSL_PORT> -tls1_2
+
+
 
 4* create the docker image with mariadb
 create a directory /home/<YOR_LOGIN>/data/database
@@ -45,15 +52,19 @@ now with the correct dockerfile, it should be done!
 we can run the image and from our host run the following comand to test it:
 	mysql -u lucas -h 172.17.0.2 -P 3306 -p123
 
+
+
+
 5* create the docker image with wordpress
-create a directory /home/<YOR_LOGIN>/data/fronted/wordpress
+create a directory /home/<YOR_LOGIN>/data/fronted
 download the default files from wordpress website and keep it
-under your host in the wordpress directory
-	wget -q -O wordpress.zip https://wordpress.org/latest.zip && \
-	unzip -q wordpress.zip && \
-	rm wordpress.zip
-give full permissions so the wordpress user in the container can modify it without problems
+under your host in the frontend directory
+	wget -q -O wordpress.zip https://wordpress.org/latest.zip
+	unzip -q wordpress.zip
 	chmod 777 -R wordpress
+	cp wordpress/* .
+	rm -rf wordpres*
+in our conf file, change listen directive to 9000
 
 
 
@@ -67,6 +78,11 @@ you can also install a extention on your vscode (Remore - SSH) to connect in you
 so you can edit your files easier
 
 COMANDOS UTEIS:-------------------------------------------------*
+
+nmap localhost -p 9000
+
+apt-get install nmap -y
+apt-get install iputils-ping -y
 
 docker exec -it srcs_incep_mariadb_1 bash
 
