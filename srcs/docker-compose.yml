@@ -1,24 +1,26 @@
 version: '3'
 
 
-# networks:
-#   my_network:
-#     driver: bridge
-
+networks:
+  my_network:
+    driver: bridge
 
 services:
-  incep_mariadb:
-    image: incep_mariadb:latest
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
     build:
       context: requirements/mariadb/
       dockerfile: Dockerfile
     ports:
       - "8001:3306"
-    network_mode: bridge
+    networks:
+      - my_network
     volumes:
       - /home/llopes-d/data/database:/var/lib/mysql
-  icep_nginx:
-    image: incep_nginx:latest
+  nginx:
+    container_name: nginx
+    image: nginx:latest
     build:
       context: requirements/nginx/
       dockerfile: Dockerfile
@@ -26,9 +28,12 @@ services:
       - /home/llopes-d/data/frontend:/var/www/html
     ports:
       - "8000:443"
-    network_mode: bridge
-  incep_wordpress:
-    image: incep_wordpress:latest
+    # network_mode: bridge
+    networks:        # Adicionando a seção de redes
+      - my_network  
+  wordpress:
+    container_name: wordpress
+    image: wordpress:latest
     build:
       context: requirements/wordpress/
       dockerfile: Dockerfile
@@ -36,4 +41,6 @@ services:
       - /home/llopes-d/data/frontend:/var/www/html
     ports:
       - "8002:9000"
-    network_mode: bridge
+    # network_mode: bridge
+    networks:        # Adicionando a seção de redes
+      - my_network  
