@@ -14,6 +14,3 @@ else
 	./wp-cli.phar user create llopes-d llopes-d@42.fr --role=editor --user_pass=123 --allow-root
 fi
 	php-fpm7.4 -F
-
-
-# tail -f
