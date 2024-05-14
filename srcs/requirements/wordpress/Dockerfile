@@ -17,9 +17,8 @@ RUN mkdir -p /run/php/php7.4-fpm && chown -R www-data:www-data /run/php/php7.4-f
 COPY www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./tools/php.sh /
 
+WORKDIR /var/www/html
 
-# Expose port (if needed)
 EXPOSE 9000
 
-# Command to run when the container starts
 CMD ["/php.sh"]

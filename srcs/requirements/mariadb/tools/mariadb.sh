@@ -2,9 +2,9 @@
 
 /usr/bin/mariadb-install-db --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0
 service mariadb start
-echo "CREATE DATABASE IF NOT EXISTS db1 ;\
-CREATE USER IF NOT EXISTS 'lucas'@'%' IDENTIFIED BY '123' ;\
-GRANT ALL PRIVILEGES ON *.* TO 'lucas'@'%' ;\
+echo "CREATE DATABASE IF NOT EXISTS wordpress ;\
+CREATE USER IF NOT EXISTS 'master'@'%' IDENTIFIED BY '123' ;\
+GRANT ALL PRIVILEGES ON *.* TO 'master'@'%' ;\
 FLUSH PRIVILEGES;" | mariadb
 service mariadb stop
 

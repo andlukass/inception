@@ -17,7 +17,8 @@ services:
     networks:
       - my_network
     volumes:
-      - /home/llopes-d/data/database:/var/lib/mysql
+      # - /home/llopes-d/data/database:/var/lib/mysql
+      - /Users/user/Documents/data/database:/var/lib/mysql
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -25,7 +26,8 @@ services:
       context: requirements/nginx/
       dockerfile: Dockerfile
     volumes:
-      - /home/llopes-d/data/frontend:/var/www/html
+      # - /home/llopes-d/data/frontend:/var/www/html
+      - /Users/user/Documents/data/frontend:/var/www/html
     ports:
       - "8000:443"
     # network_mode: bridge
@@ -38,7 +40,8 @@ services:
       context: requirements/wordpress/
       dockerfile: Dockerfile
     volumes:
-      - /home/llopes-d/data/frontend:/var/www/html
+      # - /home/llopes-d/data/frontend:/var/www/html
+      - /Users/user/Documents/data/frontend:/var/www/html
     ports:
       - "8002:9000"
     # network_mode: bridge
