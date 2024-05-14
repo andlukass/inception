@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
    php-mbstring php-xml wget && \
    rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /run/php/php7.4-fpm && chown -R www-data:www-data /run/php/php7.4-fpm
+RUN mkdir -p /run/php/php7.4-fpm && chown 777 -R /run/php/php7.4-fpm
 
 COPY ./tools/php.sh /
 
