@@ -1,6 +1,5 @@
 version: '3'
 
-
 networks:
   my_network:
     driver: bridge
@@ -39,5 +38,15 @@ services:
     volumes:
       - /home/llopes-d/data/frontend:/var/www/html
       # - /Users/user/Documents/data/frontend:/var/www/html
+    networks:
+      - my_network
+  ftp:
+    container_name: ftp
+    image: ftp:latest
+    build:
+      context: requirements/bonus/ftp/
+      dockerfile: Dockerfile
+    volumes:
+      - /home/llopes-d/data/frontend:/var/www/html
     networks:
       - my_network

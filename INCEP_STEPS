@@ -95,7 +95,7 @@ docker rmi incep_mariadb
 make
 
 
-docker kill $(docker ps -q); docker rm $(docker ps -aq) 
+docker kill $(docker ps -q); docker rm $(docker ps -aq)
 docker rmi $(docker images -q)
 
 docker build -t incep_wordpress:latest . ; docker run incep_wordpress
