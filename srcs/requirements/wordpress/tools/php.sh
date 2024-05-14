@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "listen = 9000" >> /etc/php/7.4/fpm/pool.d/www.conf
+
 if [ -e "wp-config.php" ]; then
 	echo "wordpress files already exists"
 else
