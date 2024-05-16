@@ -132,4 +132,14 @@ remove a container:
 	# mysql_install_db --datadir='/home/llopes-d/data/database'
 	# sudo mariadbd --datadir='/home/llopes-d/data/database'
 	# apt-get remove --purge mariadb-server mariadb-client mariadb-common -y
-	
+
+
+redis: 
+# in the redis cli:
+CONFIG SET protected-mode no  
+
+
+# in the config.php:
+define( 'WP_REDIS_HOST', 'redis' );
+
+define( 'WP_REDIS_PORT', '6379' );

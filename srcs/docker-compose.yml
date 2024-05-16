@@ -61,3 +61,11 @@ services:
       dockerfile: Dockerfile
     networks:
       - my_network
+  redis:
+    container_name: redis
+    image: redis:latest
+    build:
+      context: requirements/bonus/redis/
+      dockerfile: Dockerfile
+    networks:
+      - my_network
