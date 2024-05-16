@@ -14,8 +14,8 @@ services:
     networks:
       - my_network
     volumes:
-      - /home/llopes-d/data/database:/var/lib/mysql
-      # - /Users/user/Documents/data/database:/var/lib/mysql
+      # - /home/llopes-d/data/database:/var/lib/mysql
+      - /Users/user/Documents/data/database:/var/lib/mysql
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -23,8 +23,8 @@ services:
       context: requirements/nginx/
       dockerfile: Dockerfile
     volumes:
-      - /home/llopes-d/data/frontend:/var/www/html
-      # - /Users/user/Documents/data/frontend:/var/www/html
+      # - /home/llopes-d/data/frontend:/var/www/html
+      - /Users/user/Documents/data/frontend:/var/www/html
     ports:
       - "443:443"
     networks:
@@ -36,8 +36,8 @@ services:
       context: requirements/wordpress/
       dockerfile: Dockerfile
     volumes:
-      - /home/llopes-d/data/frontend:/var/www/html
-      # - /Users/user/Documents/data/frontend:/var/www/html
+      # - /home/llopes-d/data/frontend:/var/www/html
+      - /Users/user/Documents/data/frontend:/var/www/html
     networks:
       - my_network
   ftp:
@@ -47,6 +47,17 @@ services:
       context: requirements/bonus/ftp/
       dockerfile: Dockerfile
     volumes:
-      - /home/llopes-d/data/frontend:/var/www/html
+      # - /home/llopes-d/data/frontend:/var/www/html
+      - /Users/user/Documents/data/frontend:/var/www/html
+    networks:
+      - my_network
+  adminer:
+    container_name: adminer
+    image: adminer:latest
+    ports:
+      - "80:80"
+    build:
+      context: requirements/bonus/adminer/
+      dockerfile: Dockerfile
     networks:
       - my_network
