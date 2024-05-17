@@ -55,7 +55,7 @@ services:
     container_name: adminer
     image: adminer:latest
     ports:
-      - "80:80"
+      - "8080:8080"
     build:
       context: requirements/bonus/adminer/
       dockerfile: Dockerfile

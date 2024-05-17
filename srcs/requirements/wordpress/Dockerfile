@@ -17,6 +17,4 @@ COPY ./tools/php.sh /
 
 WORKDIR /var/www/html
 
-EXPOSE 9000
-
 CMD ["/php.sh"]

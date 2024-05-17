@@ -4,6 +4,4 @@ RUN apt-get update -y && apt-get install mariadb-server -y && rm -rf /var/lib/ap
 
 COPY ./tools/mariadb.sh /
 
-EXPOSE 3306
-
 CMD ["/mariadb.sh"]

@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/nginx/nginx.conf
 
 # #Copy custom Nginx configuration file
-COPY nginx.conf /etc/nginx/
-COPY ssl /etc/nginx/ssl/
+COPY ./tools/nginx.conf /etc/nginx/
+COPY ./tools/ssl /etc/nginx/ssl/
 
 # Expose port 80 and 443
 EXPOSE 443
