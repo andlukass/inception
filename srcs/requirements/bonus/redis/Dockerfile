@@ -5,4 +5,4 @@ RUN apt-get update && apt-get install -y redis && \
 
 EXPOSE 6379
 
-CMD ["redis-server"]
+CMD ["redis-server", "--protected-mode", "no"]

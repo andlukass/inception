@@ -136,10 +136,4 @@ remove a container:
 
 redis: 
 # in the redis cli:
-CONFIG SET protected-mode no  
-
-
-# in the config.php:
-define( 'WP_REDIS_HOST', 'redis' );
-
-define( 'WP_REDIS_PORT', '6379' );
+CONFIG SET protected-mode no
