@@ -1,67 +1,59 @@
 version: '3'
 
 networks:
-  my_network:
+  inception:
+    name: inception
     driver: bridge
 
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb:latest
     build: requirements/mariadb/
-    networks:
-      - my_network
-    volumes:
-      # - /home/llopes-d/data/database:/var/lib/mysql
-      - /Users/user/Documents/data/database:/var/lib/mysql
-    env_file:
-      - .env
+    volumes: ["${DB_VOLUME}:/var/lib/mysql"]
+    networks: [inception]
+    env_file: [.env]
+
   nginx:
     container_name: nginx
-    image: nginx:latest
     build: requirements/nginx/
-    volumes:
-      # - /home/llopes-d/data/frontend:/var/www/html
-      - /Users/user/Documents/data/frontend:/var/www/html
-    ports:
-      - "443:443"
-    networks:
-      - my_network
+    volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
+    depends_on: [wordpress]
+    networks: [inception]
+    ports: [443:443]
+
   wordpress:
     container_name: wordpress
-    image: wordpress:latest
     build: requirements/wordpress/
-    volumes:
-      # - /home/llopes-d/data/frontend:/var/www/html
-      - /Users/user/Documents/data/frontend:/var/www/html
-    networks:
-      - my_network
-    env_file:
-      - .env
-  ftp:
-    container_name: ftp
-    image: ftp:latest
-    build: requirements/bonus/ftp/
-    volumes:
-      # - /home/llopes-d/data/frontend:/var/www/html
-      - /Users/user/Documents/data/frontend:/var/www/html
-    ports:
-      - "21:21"
-    networks:
-      - my_network
-    env_file:
-      - .env
-  adminer:
-    container_name: adminer
-    image: adminer:latest
-    ports:
-      - "8080:8080"
-    build: requirements/bonus/adminer/
-    networks:
-      - my_network
-  redis:
-    container_name: redis
-    image: redis:latest
-    build: requirements/bonus/redis/
-    networks:
-      - my_network
+    volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
+    networks: [inception]
+    depends_on: [mariadb]
+    env_file: [.env]
+
+## BONUS PART
+  # ftp:
+  #   container_name: ftp
+  #   image: ftp:latest
+  #   build: requirements/bonus/ftp/
+  #   volumes:
+  #     # - /home/llopes-d/data/frontend:/var/www/html
+  #     - /Users/user/Documents/data/frontend:/var/www/html
+  #   ports:
+  #     - "21:21"
+  #   networks:
+  #     - inception
+  #   env_file:
+  #     - .env
+  # adminer:
+  #   container_name: adminer
+  #   image: adminer:latest
+  #   ports:
+  #     - "8080:8080"
+  #   build: requirements/bonus/adminer/
+  #   networks:
+  #     - inception
+  # redis:
+  #   container_name: redis
+  #   image: redis:latest
+  #   build: requirements/bonus/redis/
+  #   networks:
+  #     - inception
