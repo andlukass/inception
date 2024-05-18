@@ -16,6 +16,8 @@ services:
     volumes:
       # - /home/llopes-d/data/database:/var/lib/mysql
       - /Users/user/Documents/data/database:/var/lib/mysql
+    env_file:
+      - .env
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -40,6 +42,8 @@ services:
       - /Users/user/Documents/data/frontend:/var/www/html
     networks:
       - my_network
+    env_file:
+      - .env
   ftp:
     container_name: ftp
     image: ftp:latest
@@ -53,6 +57,8 @@ services:
       - "21:21"
     networks:
       - my_network
+    env_file:
+      - .env
   adminer:
     container_name: adminer
     image: adminer:latest
