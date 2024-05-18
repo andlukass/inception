@@ -30,30 +30,21 @@ services:
     env_file: [.env]
 
 ## BONUS PART
-  # ftp:
-  #   container_name: ftp
-  #   image: ftp:latest
-  #   build: requirements/bonus/ftp/
-  #   volumes:
-  #     # - /home/llopes-d/data/frontend:/var/www/html
-  #     - /Users/user/Documents/data/frontend:/var/www/html
-  #   ports:
-  #     - "21:21"
-  #   networks:
-  #     - inception
-  #   env_file:
-  #     - .env
-  # adminer:
-  #   container_name: adminer
-  #   image: adminer:latest
-  #   ports:
-  #     - "8080:8080"
-  #   build: requirements/bonus/adminer/
-  #   networks:
-  #     - inception
-  # redis:
-  #   container_name: redis
-  #   image: redis:latest
-  #   build: requirements/bonus/redis/
-  #   networks:
-  #     - inception
+  ftp:
+    container_name: ftp
+    build: requirements/bonus/ftp/
+    volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
+    networks: [inception]
+    env_file: [.env]
+    ports: [21:21]
+
+  adminer:
+    container_name: adminer
+    build: requirements/bonus/adminer/
+    networks: [inception]
+    ports: [8080:8080]
+
+  redis:
+    container_name: redis
+    build: requirements/bonus/redis/
+    networks: [inception]
