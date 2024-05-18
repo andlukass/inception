@@ -49,6 +49,8 @@ services:
     volumes:
       # - /home/llopes-d/data/frontend:/var/www/html
       - /Users/user/Documents/data/frontend:/var/www/html
+    ports:
+      - "21:21"
     networks:
       - my_network
   adminer:
