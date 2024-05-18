@@ -15,6 +15,6 @@ PHP
 	wp plugin activate redis-cache --allow-root
 	cp wp-includes/class-wp-object-cache.php ./wp-content/
 	wp redis enable --allow-root
-	wp theme install --activate yuki-reverie-blog --allow-root
+	wp theme install --activate blognet --allow-root
 fi
 	php-fpm7.4 -F
