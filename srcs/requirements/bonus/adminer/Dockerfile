@@ -1,15 +1,8 @@
 FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y \
-    wget \
-    php \
-    php-mysqli \
-    php-pdo \
-    php-pgsql \
-    php-json \
-    php-zip \
-    php-xml \
-    php-mbstring && \
+    wget php php-mysqli php-pdo php-pgsql \
+    php-json php-zip php-xml php-mbstring && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/www/html \
