@@ -1,139 +1,95 @@
 1* do the 1st bonus *THIS WILL HELP YOU DURING THE CONFIGURATION*
 
 
+extra cool thing:
+install git so you can keep your containers safe and portable
+apt install git
+dont forget to add the ssh key to your github
+ssh-keygen -t ed25519 -C "your_email@example.com"
 
 
 2* install docker engine:
-install certificates so we can acess https
-sudo apt-get install ca-certificates curl gnupg lsb-release
-
-get the security key of docker images and install on our system
-wget https://download.docker.com/linux/debian/gpg
-sudo apt-key add gpg
-
-get the sources of docker to our apt
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt update
-
-install docker cli
-sudo apt install docker-ce docker-ce-cli containerd.io
-
-init docker
-sudo systemctl start docker
-sudo systemctl enable docker
-
+follow the official steps to install docker:
+https://docs.docker.com/engine/install/debian/
 sudo apt install docker-compose /// so you can use the docker-compose.yml
-
-
 
 
 3* create the docker image with nginx
 create a key and certificate so we can use ssl(tsl1.2) on our server 
-with the following command:
+with the following command: //this is the gren locker in the website url
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.key -out cert.crt
-we will keep this two files in the srcs/requirements/nginx/ssl so we
-can copy it with the dockerfile
+we will keep this two files in the srcs/requirements/nginx/tools/ssl so we
+can copy it in the dockerfile
 now with the correct dockerfile and conf, it should be done!
 we can run the image and from our host access following url to test it:
-	https://172.17.0.2:443
+	https://localhost:443
 you can test if the tls1.2 separately by runnning:
 openssl s_client -connect <IP_ADRESS>:<SSL_PORT> -tls1_2
-
 
 
 4* create the docker image with mariadb
 create a directory /home/<YOR_LOGIN>/data/database
 it ill be used as the mariadb data directory
+we will need to do a script that install the database in the dir we want
+and create a user to access the database outside localhost, and after
+start the mariadb in safe mode passing the default user mysql, the path
+to the wanted DB and with the bind command to ensure we can acess it form outside
 now with the correct dockerfile, it should be done!
 install mariadb server on your host, so we can test it
 	apt-get update -y && apt-get install mariadb-server -y
 now we can run from our host the following comand to test it:
-	mysql -u lucas -h 172.17.0.2 -P 3306 -p123
+	mysql -u <sql_login> -h <container_ip> -P 3306 -p123
 
 
 5* create the docker image with wordpress
-create a directory /home/<YOR_LOGIN>/data/fronted
-download the default files from wordpress website and keep it
-under your host in the frontend directory
-	wget -q -O wordpress.zip https://wordpress.org/latest.zip
-	unzip -q wordpress.zip
-	chmod 777 -R wordpress
-	cp wordpress/* .
-	rm -rf wordpres*
-in our conf file, change listen directive to 9000
+create a directory /home/<YOR_LOGIN>/data/frontend
 
-cd /var/www/html
-wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod 777 wp-cli.phar
-./wp-cli.phar core download --allow-root
-./wp-cli.phar config create --dbname="db1" --dbuser="lucas" --dbpass="123" --dbhost="mariadb" --allow-root
-chmod 777 wp-config.php
-
+6* change hosts file to accept connections via <login>.42.fr
+echo "127.0.0.1 <login>.42.fr" >> /etc/hosts
 
 BONUS 
 1* INSTALL SSH (TO USE ON YOUR NORMAL PC)
 change the network confg on you Virtual Box to brigde
-apt install openssh-server//it will open the port 22
-check your ip with: "ip addr show" // usually its the one starting with 10.***
+apt install openssh-server//it will open the port 22 on the VM
+check your ip with: "ip a" // usually its the one starting with 10.***
 in your real computer you can log ssh with: "ssh <your_user>@<VM_ipadress> -p 22"
 you can also install a extention on your vscode (Remore - SSH) to connect in your VM trough vscode, 
 so you can edit your files easier
 
-COMANDOS UTEIS:-------------------------------------------------*
+2* adminer
+its a admin page that connect with the sql container, its just a dockerfile with php
+and serving a file, that we can access and login in our database.
 
-nmap localhost -p 9000
+3* ftp
+its a way to access the wordpress dir from any computer, we just need a dockerfile with ftp
+and copy our script that create a new user so we can access it from outside, and
+add the dir we want it to redirect to the default conf file
 
-apt-get update && apt-get install nmap -y
-apt-get update && apt-get install iputils-ping -y
+4* redis
 
-docker exec -it srcs_incep_mariadb_1 bash
+NICE COMMANDS:-------------------------------------------------*
 
-docker stop srcs_incep_mariadb_1
-docker rm srcs_incep_mariadb_1
-docker rmi incep_mariadb
-make
+//NETWORK CHECKS
+apt-get update && apt-get install iputils-ping -y //instal ping
+ss -tuln // list active ports
+docker network ls // list all docker networks
+docker inspect <network_name> // list all containers inside the network
 
 
+//DOCKER COMMANDS
+//remove all the container and images, and start from scratch
 docker kill $(docker ps -q); docker rm $(docker ps -aq)
 docker rmi $(docker images -q)
 
-docker build -t incep_wordpress:latest . ; docker run incep_wordpress
+//IMAGE RELATED COMMANDS
+docker build -t <any_name>:latest <Dockerfile_Dir> // build a docker image manually
+docker images // list docker images
+docker rmi <IMAGE_ID> //remove docker images
 
-docker run -e <ENV> -itd --rm <port> --name <nome> <image>
-
-ss -tuln // portas ativas
-
-build a docker image:
-	docker build -t <create_a_name>:latest <Dockerfile_Dir> /// the '-t' allow you to give the image a name
-
-list docker images:
-	docker images
-
-remove docker images:
-	docker rmi <IMAGE_ID>
-
-run a container from a image:
-	docker run -d  <IMAGE_ID> //// the '-d' makes it run in background, so it doest freeze your terminal
-
-list all running containers:
-	docker ps -a /// the '-a' list even stopped containers
-
-enter into a running container:
-	docker exec -it <CONTAINER_ID> bash
-
-stop a container:
-	docker stop  <CONTAINER_ID>
-
-remove a container:
-	docker rm  <CONTAINER_ID>
-
-	# systemctl stop mysql
-	# mysql_install_db --datadir='/home/llopes-d/data/database'
-	# sudo mariadbd --datadir='/home/llopes-d/data/database'
-	# apt-get remove --purge mariadb-server mariadb-client mariadb-common -y
-
-
-redis: 
-# in the redis cli:
-CONFIG SET protected-mode no
+//CONTAINER RELATED COMMANDS
+// run a container from a image
+docker run -d  <IMAGE_ID> // the '-d' makes it run in background, so it doest freeze your terminal
+docker ps -a // list all containers ('-a' list even stopped containers)
+docker exec -it <container> bash // enter into a running container
+docker stop  <CONTAINER_ID> // stop a container:
+docker rm  <CONTAINER_ID> // remove a container:

@@ -7,13 +7,16 @@ networks:
 
 services:
   mariadb:
+    restart: on-failure
     container_name: mariadb
     build: requirements/mariadb/
     volumes: ["${DB_VOLUME}:/var/lib/mysql"]
     networks: [inception]
     env_file: [.env]
 
+
   nginx:
+    restart: on-failure
     container_name: nginx
     build: requirements/nginx/
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
@@ -22,6 +25,7 @@ services:
     ports: [443:443]
 
   wordpress:
+    restart: on-failure
     container_name: wordpress
     build: requirements/wordpress/
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
@@ -31,6 +35,7 @@ services:
 
 ## BONUS PART
   ftp:
+    restart: on-failure
     container_name: ftp
     build: requirements/bonus/ftp/
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
@@ -39,12 +44,14 @@ services:
     ports: [21:21]
 
   adminer:
+    restart: on-failure
     container_name: adminer
     build: requirements/bonus/adminer/
     networks: [inception]
     ports: [8080:8080]
 
   redis:
+    restart: on-failure
     container_name: redis
     build: requirements/bonus/redis/
     networks: [inception]
