@@ -7,7 +7,7 @@ clean:
 fclean: clean
 	docker rmi $$(docker images -q)
 
-re: clean
+re: fclean
 	rm -rf /home/llopes-d/data
 	mkdir -p /home/llopes-d/data/frontend
 	mkdir -p /home/llopes-d/data/database

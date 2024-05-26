@@ -95,3 +95,38 @@ docker ps -a // list all containers ('-a' list even stopped containers)
 docker exec -it <container> bash // enter into a running container
 docker stop  <CONTAINER_ID> // stop a container:
 docker rm  <CONTAINER_ID> // remove a container:
+
+expose expoe apenas para os servicos da mesma rede e nao para o host
+
+
+REDIS
+instalar e ativar o plugin no script do wordpress
+redis protected-mode pq nao esta rodando no mesmo pc
+
+FTP
+criar um user com home e terminal definido para ter um perfil para acessar no ftp
+definir portas do modo de fora e definir a pasta padrao
+
+ADMINER
+so instalar e rodar passando a porta e a pasta
+
+NGINX
+gerar os arquivos de certificado para o ssl
+copiar o arguivo de conf padrao, adicionar o fastcgi na porta 9000 e
+introduzir o index.php e o daemon para rodar em background
+
+MARIADB
+cria um script para instalar o banco na pasta correta
+e cria caso nao exista a base de dados e o user admin
+e garante acesso a todos os bancos e tabelas acessando de qualquer ip
+encerra o servico para poder startar em daemon
+
+WORDPRESS
+confere se ja foi instalado antes
+cria e da permissoes de acesso para a pasta onde vai o php
+coloca a conf da porta no arquivo de configuracao 
+baixa os arquivos do wordpress
+cria o arquivo de conf passando as config do redis
+instala o docker configurando com o banco, instala e ativa o redis
+instala um tema personalizado
+roda o servidor php

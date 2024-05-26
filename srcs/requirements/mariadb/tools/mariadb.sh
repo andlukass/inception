@@ -8,4 +8,4 @@ GRANT ALL PRIVILEGES ON *.* TO '$DB_ADMIN'@'%' ;\
 FLUSH PRIVILEGES;" | mariadb
 service mariadb stop
 
-mysqld_safe --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0
+mariadbd --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0
