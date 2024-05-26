@@ -7,6 +7,8 @@ apt install git
 dont forget to add the ssh key to your github
 ssh-keygen -t ed25519 -C "your_email@example.com"
 
+make sure you have installed build essentials so you can run make command:
+apt-get install build-essential
 
 2* install docker engine:
 follow the official steps to install docker:
