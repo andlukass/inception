@@ -40,7 +40,7 @@ services:
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
     networks: [inception]
     env_file: [.env]
-    ports: ["21:21", "8000:8000"]
+    ports: ["21:21", "8000-8030:8000-8030"]
 
   adminer:
     restart: on-failure
