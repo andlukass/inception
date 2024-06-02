@@ -1,7 +1,7 @@
 1* do the 1st bonus *THIS WILL HELP YOU DURING THE CONFIGURATION*
 
 
-extra cool thing:
+extras:
 install git so you can keep your containers safe and portable
 apt install git
 dont forget to add the ssh key to your github
@@ -9,6 +9,10 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 make sure you have installed build essentials so you can run make command:
 apt-get install build-essential
+
+add to the /etc/hosts file, the following line:
+127.0.0.1 <your-login>42.fr
+
 
 2* install docker engine:
 follow the official steps to install docker:
@@ -108,7 +112,11 @@ criar um user com home e terminal definido para ter um perfil para acessar no ft
 definir portas do modo de fora e definir a pasta padrao
 
 ADMINER
-so instalar e rodar passando a porta e a pasta
+so instalar e rodar o server php passando a porta e a pasta
+
+PHPMYADMIN
+baixar e descompactar os arquivos do phpmyadmin, colocar o mariadb como host, e rodar o 
+server php passando a porta e a pasta
 
 NGINX
 gerar os arquivos de certificado para o ssl

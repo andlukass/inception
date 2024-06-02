@@ -8,8 +8,8 @@ networks:
 services:
   mariadb:
     restart: on-failure
-    image: mariadb:latest
     container_name: mariadb
+    image: mariadb:mine
     build: requirements/mariadb/
     volumes: ["${DB_VOLUME}:/var/lib/mysql"]
     networks: [inception]
@@ -17,7 +17,7 @@ services:
 
   nginx:
     restart: on-failure
-    image: nginx:latest
+    image: nginx:mine
     container_name: nginx
     build: requirements/nginx/
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
@@ -27,7 +27,7 @@ services:
 
   wordpress:
     restart: on-failure
-    image: wordpress:latest
+    image: wordpress:mine
     container_name: wordpress
     build: requirements/wordpress/
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
@@ -38,25 +38,33 @@ services:
 ## BONUS PART
   ftp:
     restart: on-failure
-    image: ftp:latest
+    image: ftp:mine
     container_name: ftp
     build: requirements/bonus/ftp/
     volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
     networks: [inception]
     env_file: [.env]
-    ports: ["21:21", "8000-8030:8000-8030"]
+    ports: ["21:21", "8010-8040:8010-8040"]
 
   adminer:
     restart: on-failure
-    image: adminer:latest
+    image: adminer:mine
     container_name: adminer
     build: requirements/bonus/adminer/
     networks: [inception]
-    ports: [8080:8080]
+    ports: [8000:8000]
 
   redis:
     restart: on-failure
-    image: redis:latest
+    image: redis:mine
     container_name: redis
     build: requirements/bonus/redis/
+    networks: [inception]
+
+  phpmyadmin:
+    restart: on-failure
+    image: phpmyadmin:mine
+    container_name: phpmyadmin
+    build: requirements/bonus/phpmyadmin/
+    ports: [8080:8080]
     networks: [inception]
