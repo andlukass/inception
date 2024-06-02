@@ -46,6 +46,14 @@ services:
     env_file: [.env]
     ports: ["21:21", "8010-8040:8010-8040"]
 
+  monstaftp:
+    restart: on-failure
+    image: monstaftp:mine
+    container_name: monstaftp
+    build: requirements/bonus/monstaftp/
+    networks: [inception]
+    ports: ["8080:8080"]
+
   adminer:
     restart: on-failure
     image: adminer:mine
@@ -59,12 +67,4 @@ services:
     image: redis:mine
     container_name: redis
     build: requirements/bonus/redis/
-    networks: [inception]
-
-  phpmyadmin:
-    restart: on-failure
-    image: phpmyadmin:mine
-    container_name: phpmyadmin
-    build: requirements/bonus/phpmyadmin/
-    ports: [8080:8080]
     networks: [inception]

@@ -114,9 +114,9 @@ definir portas do modo de fora e definir a pasta padrao
 ADMINER
 so instalar e rodar o server php passando a porta e a pasta
 
-PHPMYADMIN
-baixar e descompactar os arquivos do phpmyadmin, colocar o mariadb como host, e rodar o 
-server php passando a porta e a pasta
+MONSTAFTP
+baixar, copiar e descompactar os arquivos do monsta, trocar o limite de momoria para
+pode fazer upload, e rodar o server php passando a porta e a pasta
 
 NGINX
 gerar os arquivos de certificado para o ssl
