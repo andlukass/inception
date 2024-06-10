@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
-RUN apt-get update && apt-get install -y apache2 php
-   php-mbstring wget unzip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y apache2 php \
+   php-mbstring wget unzip
 
 RUN mkdir -p /var/www/html
 

@@ -121,7 +121,7 @@ pode fazer upload, e rodar o server php passando a porta e a pasta
 NGINX
 gerar os arquivos de certificado para o ssl
 copiar o arguivo de conf padrao, adicionar o fastcgi na porta 9000 e
-introduzir o index.php e o daemon para rodar em background
+introduzir o index.php e o daemon off para nao rodar em background
 
 MARIADB
 cria um script para instalar o banco na pasta correta

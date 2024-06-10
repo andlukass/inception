@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt-get update -y && apt-get install mariadb-server -y && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && apt-get install mariadb-server -y
 
 COPY ./tools/mariadb.sh /
 

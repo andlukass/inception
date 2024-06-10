@@ -2,8 +2,7 @@ FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y \
    php-fpm php-mysql php-curl php-gd \
-   php-mbstring php-xml wget iputils-ping && \
-   rm -rf /var/lib/apt/lists/*
+   php-mbstring php-xml wget iputils-ping
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
    && chmod +x wp-cli.phar \

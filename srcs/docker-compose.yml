@@ -5,13 +5,25 @@ networks:
     name: inception
     driver: bridge
 
+volumes:
+  database:
+    name: database
+    driver: local
+    driver_opts:
+      device: "${DB_VOLUME}"
+  frontend:
+    name: frontend
+    driver: local
+    driver_opts:
+      device: "${FRONTEND_VOLUME}"
+
 services:
   mariadb:
     restart: on-failure
     container_name: mariadb
     image: mariadb:mine
     build: requirements/mariadb/
-    volumes: ["${DB_VOLUME}:/var/lib/mysql"]
+    volumes: ["database:/var/lib/mysql"]
     networks: [inception]
     env_file: [.env]
 
@@ -20,7 +32,7 @@ services:
     image: nginx:mine
     container_name: nginx
     build: requirements/nginx/
-    volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
+    volumes: ["frontend:/var/www/html"]
     depends_on: [wordpress]
     networks: [inception]
     ports: [443:443]
@@ -30,41 +42,41 @@ services:
     image: wordpress:mine
     container_name: wordpress
     build: requirements/wordpress/
-    volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
+    volumes: ["frontend:/var/www/html"]
     networks: [inception]
     depends_on: [mariadb]
     env_file: [.env]
 
-## BONUS PART
-  ftp:
-    restart: on-failure
-    image: ftp:mine
-    container_name: ftp
-    build: requirements/bonus/ftp/
-    volumes: ["${FRONTEND_VOLUME}:/var/www/html"]
-    networks: [inception]
-    env_file: [.env]
-    ports: ["21:21", "8010-8040:8010-8040"]
+# ## BONUS PART
+#   ftp:
+#     restart: on-failure
+#     image: ftp:mine
+#     container_name: ftp
+#     build: requirements/bonus/ftp/
+#     volumes: ["frontend:/var/www/html"]
+#     networks: [inception]
+#     env_file: [.env]
+#     ports: ["21:21", "8010-8040:8010-8040"]
 
-  monstaftp:
-    restart: on-failure
-    image: monstaftp:mine
-    container_name: monstaftp
-    build: requirements/bonus/monstaftp/
-    networks: [inception]
-    ports: ["8080:8080"]
+#   monstaftp:
+#     restart: on-failure
+#     image: monstaftp:mine
+#     container_name: monstaftp
+#     build: requirements/bonus/monstaftp/
+#     networks: [inception]
+#     ports: ["8080:8080"]
 
-  adminer:
-    restart: on-failure
-    image: adminer:mine
-    container_name: adminer
-    build: requirements/bonus/adminer/
-    networks: [inception]
-    ports: [8000:8000]
+#   adminer:
+#     restart: on-failure
+#     image: adminer:mine
+#     container_name: adminer
+#     build: requirements/bonus/adminer/
+#     networks: [inception]
+#     ports: [8000:8000]
 
-  redis:
-    restart: on-failure
-    image: redis:mine
-    container_name: redis
-    build: requirements/bonus/redis/
-    networks: [inception]
+#   redis:
+#     restart: on-failure
+#     image: redis:mine
+#     container_name: redis
+#     build: requirements/bonus/redis/
+#     networks: [inception]
