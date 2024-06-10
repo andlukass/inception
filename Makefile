@@ -15,6 +15,12 @@ fclean: clean
 	docker rmi $$(docker images -q) || true
 	docker system prune -af
 
+bclean:
+	docker kill ftp && docker rm ftp && docker rmi ftp:mine
+	docker kill monstaftp && docker rm monstaftp && docker rmi monstaftp:mine
+	docker kill adminer && docker rm adminer && docker rmi adminer:mine
+
+
 re: fclean
 	rm -rf /home/llopes-d/data
 	mkdir -p /home/llopes-d/data/frontend

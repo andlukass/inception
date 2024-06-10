@@ -47,36 +47,36 @@ services:
     depends_on: [mariadb]
     env_file: [.env]
 
-# ## BONUS PART
-#   ftp:
-#     restart: on-failure
-#     image: ftp:mine
-#     container_name: ftp
-#     build: requirements/bonus/ftp/
-#     volumes: ["frontend:/var/www/html"]
-#     networks: [inception]
-#     env_file: [.env]
-#     ports: ["21:21", "8010-8040:8010-8040"]
+## BONUS PART
+  ftp:
+    restart: on-failure
+    image: ftp:mine
+    container_name: ftp
+    build: requirements/bonus/ftp/
+    volumes: ["frontend:/var/www/html"]
+    networks: [inception]
+    env_file: [.env]
+    ports: ["21:21", "8010-8040:8010-8040"]
 
-#   monstaftp:
-#     restart: on-failure
-#     image: monstaftp:mine
-#     container_name: monstaftp
-#     build: requirements/bonus/monstaftp/
-#     networks: [inception]
-#     ports: ["8080:8080"]
+  monstaftp:
+    restart: on-failure
+    image: monstaftp:mine
+    container_name: monstaftp
+    build: requirements/bonus/monstaftp/
+    networks: [inception]
+    ports: ["8080:8080"]
 
-#   adminer:
-#     restart: on-failure
-#     image: adminer:mine
-#     container_name: adminer
-#     build: requirements/bonus/adminer/
-#     networks: [inception]
-#     ports: [8000:8000]
+  adminer:
+    restart: on-failure
+    image: adminer:mine
+    container_name: adminer
+    build: requirements/bonus/adminer/
+    networks: [inception]
+    ports: [8000:8000]
 
-#   redis:
-#     restart: on-failure
-#     image: redis:mine
-#     container_name: redis
-#     build: requirements/bonus/redis/
-#     networks: [inception]
+  redis:
+    restart: on-failure
+    image: redis:mine
+    container_name: redis
+    build: requirements/bonus/redis/
+    networks: [inception]
