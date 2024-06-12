@@ -10,12 +10,16 @@ volumes:
     name: database
     driver: local
     driver_opts:
+      type: none
       device: "${DB_VOLUME}"
+      o: bind
   frontend:
     name: frontend
     driver: local
     driver_opts:
+      type: none
       device: "${FRONTEND_VOLUME}"
+      o: bind
 
 services:
   mariadb:

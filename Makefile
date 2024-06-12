@@ -6,8 +6,8 @@ all:
 
 clean:
 	rm -rf /home/llopes-d/data
-	docker volume rm $(docker volume ls -q) || true
-	docker network rm $(docker network ls -q) || true
+	docker volume rm $$(docker volume ls -q) || true
+	docker network rm $$(docker network ls -q) || true
 	docker kill $$(docker ps -q) || true
 	docker rm $$(docker ps -aq) || true
 
