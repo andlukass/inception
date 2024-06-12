@@ -19,6 +19,7 @@ bclean:
 	docker kill ftp && docker rm ftp && docker rmi ftp:mine
 	docker kill monstaftp && docker rm monstaftp && docker rmi monstaftp:mine
 	docker kill adminer && docker rm adminer && docker rmi adminer:mine
+	docker kill redis && docker rm redis && docker rmi redis:mine
 
 
 re: fclean
