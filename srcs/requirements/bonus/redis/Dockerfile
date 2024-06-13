@@ -2,4 +2,4 @@ FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y redis
 
-CMD ["redis-server", "--protected-mode", "no"]
+ENTRYPOINT ["redis-server", "--protected-mode", "no"]

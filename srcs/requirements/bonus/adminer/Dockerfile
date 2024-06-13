@@ -5,4 +5,4 @@ RUN apt-get update && apt-get install -y wget php php-mysql
 RUN mkdir -p /var/www/html && \
    wget "https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php" -O /var/www/html/index.php
 
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html"]
+ENTRYPOINT ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html"]

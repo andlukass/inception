@@ -14,4 +14,4 @@ rm -rf monsta_install.zip mftp
 
 RUN sed -i 's/memory_limit = -1/memory_limit = 1024M/g' /etc/php/7.4/cli/php.ini
 
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+ENTRYPOINT ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]

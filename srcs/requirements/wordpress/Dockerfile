@@ -16,4 +16,4 @@ COPY ./tools/php.sh /
 
 WORKDIR /var/www/html
 
-CMD ["/php.sh"]
+ENTRYPOINT ["/php.sh"]
