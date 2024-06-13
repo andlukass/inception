@@ -1,3 +1,8 @@
+#INCEPTION
+Project to start in the world of containers!
+
+##HELPER "GUIDE"
+I created this file during inception, it helped me organize my thoughts, besides having something to check certain commands, feel free to use it too!
 
 extras:
 INSTALL SSH (TO USE ON YOUR NORMAL PC)
@@ -5,20 +10,17 @@ change the network confg on you Virtual Box to brigde
 apt install openssh-server//it will open the port 22 on the VM
 check your ip with: "ip a" // usually its the one starting with 10.***
 in your real computer you can log ssh with: "ssh <your_user>@<VM_ipadress> -p 22"
-you can also install a extention on your vscode (Remore - SSH) to connect in your VM trough vscode, 
-so you can edit your files easier
+you can also install a extention on your vscode (Remore - SSH) to connect in your VM trough vscode, so you can edit your files easier
 
 install git so you can keep your containers safe and portable
 apt install git
 dont forget to add the ssh key to your github
 ssh-keygen -t ed25519 -C "your_email@example.com"
 
+
+1* install build esssentials
 make sure you have installed build essentials so you can run make command:
 apt-get install build-essential
-
-add to the /etc/hosts file, the following line:
-127.0.0.1 <your-login>42.fr
-
 
 2* install docker engine:
 follow the official steps to install docker:
@@ -30,8 +32,7 @@ sudo apt install docker-compose /// so you can use the docker-compose.yml
 create a key and certificate so we can use ssl(tsl1.2) on our server 
 with the following command: //this is the gren locker in the website url
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.key -out cert.crt
-we will keep this two files in the srcs/requirements/nginx/tools/ssl so we
-can copy it in the dockerfile
+we will keep this two files in the srcs/requirements/nginx/tools/ssl so we can copy it in the dockerfile
 now with the correct dockerfile and conf, it should be done!
 we can run the image and from our host access following url to test it:
 	https://localhost:443
@@ -42,10 +43,7 @@ openssl s_client -connect <IP_ADRESS>:<SSL_PORT> -tls1_2
 4* create the docker image with mariadb
 create a directory /home/<YOR_LOGIN>/data/database
 it ill be used as the mariadb data directory
-we will need to do a script that install the database in the dir we want
-and create a user to access the database outside localhost, and after
-start the mariadb in safe mode passing the default user mysql, the path
-to the wanted DB and with the bind command to ensure we can acess it form outside
+we will need to do a script that install the database in the dir we want and create a user to access the database outside localhost, and after start the mariadb in safe mode passing the default user mysql, the path to the wanted DB and with the bind command to ensure we can acess it form outside
 now with the correct dockerfile, it should be done!
 install mariadb server on your host, so we can test it
 	apt-get update -y && apt-get install mariadb-server -y
@@ -58,23 +56,18 @@ create a directory /home/<YOR_LOGIN>/data/frontend
 it ill be used as the wordpress files directory
 install php, install wp-cli so we can config wordpress by terminal.
 make it listen to port 9000.
-if it is the first run, download de wordpress files, create the config file, run the
-installation of wordpress, to configure the initial settings and connect with mariadb.
-create the extra user, download and install the redis plugin, and then run the php server
-
+if it is the first run, download de wordpress files, create the config file, run the installation of wordpress, to configure the initial settings and connect with mariadb, create the extra user, download and install the redis plugin, and then run the php server.
 
 6* change hosts file to accept connections via <login>.42.fr
 echo "127.0.0.1 <login>.42.fr" >> /etc/hosts
 
 BONUS 
 1* adminer
-its a admin page that connect with the sql container, its just a dockerfile with php
-and serving a file, that we can access and login in our database.
+its a admin page that connect with the sql container, its just a dockerfile with php and serving a file, that we can access and login in our database.
 just download the adminer files and run php on the rigth dir
 
 2* ftp
-its a way to access the wordpress dir from any computer, we just need a dockerfile with ftp
-and copy our script that create a new user so we can access it from outside, and
+its a way to access the wordpress dir from any computer, we just need a dockerfile with ftp and copy our script that create a new user so we can access it from outside, and
 add the dir we want it to redirect to the default conf file
 
 3* monstaftp
@@ -111,42 +104,3 @@ docker ps -a // list all containers ('-a' list even stopped containers)
 docker exec -it <container> bash // enter into a running container
 docker stop  <CONTAINER_ID> // stop a container:
 docker rm  <CONTAINER_ID> // remove a container:
-
-
-REDIS
-instalar e ativar o plugin no script do wordpress
-redis protected-mode pq nao esta rodando no mesmo pc
-
-FTP
-criar um user com home e terminal definido para ter um perfil para acessar no ftp
-definir portas do modo de fora e definir a pasta padrao
-
-MONSTAFTP
-
-ADMINER
-so instalar e rodar o server php passando a porta e a pasta
-
-MONSTAFTP
-baixar, copiar e descompactar os arquivos do monsta, trocar o limite de momoria para
-pode fazer upload, e rodar o server php passando a porta e a pasta
-
-NGINX
-gerar os arquivos de certificado para o ssl
-copiar o arguivo de conf padrao, adicionar o fastcgi na porta 9000 e
-introduzir o index.php e o daemon off para nao rodar em background
-
-MARIADB
-cria um script para instalar o banco na pasta correta
-e cria caso nao exista a base de dados e o user admin
-e garante acesso a todos os bancos e tabelas acessando de qualquer ip
-encerra o servico para poder startar em daemon
-
-WORDPRESS
-confere se ja foi instalado antes
-cria e da permissoes de acesso para a pasta onde vai o php
-coloca a conf da porta no arquivo de configuracao 
-baixa os arquivos do wordpress
-cria o arquivo de conf passando as config do redis
-instala o docker configurando com o banco, instala e ativa o redis
-instala um tema personalizado
-roda o servidor php
