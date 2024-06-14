@@ -10,10 +10,13 @@ Do the VM within an ubuntu machine, there way less compability errors, and tutor
 INSTALL SSH (TO USE ON YOUR NORMAL PC)
 change the network confg on you Virtual Box to brigde
 
-apt install openssh-server
+	apt install openssh-server
 
 check your ip with: "ip a" // usually its the one starting with 10.***
-in your real computer you can log ssh with: "ssh <your_user>@<VM_ipadress> -p 22"
+in your real computer you can log ssh with:
+	
+ 	ssh <your_user>@<VM_ipadress> -p 22
+  
 you can also install a extention on your vscode (Remore - SSH) to connect in your VM trough vscode, so you can edit your files easier
 
 install git so you can keep your containers safe and portable
