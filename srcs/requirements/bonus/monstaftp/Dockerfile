@@ -8,9 +8,9 @@ WORKDIR /var/www/html
 
 COPY ./tools/monsta_install.zip /var/www/html
 
-RUN unzip monsta_install.zip && \
-cp -r mftp/* . && \
-rm -rf monsta_install.zip mftp
+RUN unzip monsta_install.zip
+RUN cp -r mftp/* .
+RUN rm -rf monsta_install.zip mftp
 
 RUN sed -i 's/memory_limit = -1/memory_limit = 1024M/g' /etc/php/7.4/cli/php.ini
 
